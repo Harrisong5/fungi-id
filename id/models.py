@@ -24,16 +24,16 @@ class Fungi(models.Model):
     image_url = models.ImageField(upload_to='fungi_images/', null=True, blank=True)
     lookalikes = models.CharField(max_length=255)
 
-    TOXICITY_CHOICES = [
-        ('fatal', 'Fatal'),
-        ('harmful', 'Harmful'),
-        ('medicinal', 'Medicinal'),
-        ('cullinary', 'Cullinary'),
-        ('psychoactive', 'Psychoactive'),
-        ('edible', 'Edible'),
-        ('unknown', 'Unknown'),
-    ]
-    toxicity = models.CharField(max_length=12, choices=TOXICITY_CHOICES, default='unknown')
+    TOXICITY_CHOICES = (
+        (6, 'Fatal'),
+        (5, 'Harmful'),
+        (4, 'Edible'),
+        (3, 'Psychoactive'),
+        (2, 'Medicinal'),
+        (1, 'Cullinary'),
+        (0, 'Unknown'),
+    )
+    toxicity = models.IntegerField(choices=TOXICITY_CHOICES, default=0)
 
 
     def __str__(self):
