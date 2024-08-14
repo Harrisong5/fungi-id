@@ -82,6 +82,7 @@ WSGI_APPLICATION = 'funguys.wsgi.application'
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 CSRF_TRUSTED_ORIGINS = ["https://8000-harrisong5-fungiid-2ch1vey5j2l.ws.codeinstitute-ide.net/"]
 
