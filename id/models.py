@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Profile(models.Model):
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile_user")
     image_url = models.ImageField(upload_to='profile_images/', null=True, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
@@ -13,6 +14,7 @@ class Profile(models.Model):
         return self.username
 
 class Fungi(models.Model):
+
     fungi_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     species = models.CharField(max_length=255, unique=True)
@@ -47,3 +49,39 @@ class Identified(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(blank=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+class Safety(models.Model):
+
+    fungi_id = models.ForeignKey(Fungi, on_delete=models.CASCADE)
+   
+    TOXICITY_CHOICES = (
+        (6, 'Fatal'),
+        (5, 'Harmful'),
+        (4, 'Edible'),
+        (3, 'Psychoactive'),
+        (2, 'Medicinal'),
+        (1, 'Cullinary'),
+        (0, 'Unknown'),
+    )
+    toxicity = models.IntegerField(choices=TOXICITY_CHOICES, default=0)
+    precautions = models.TextField()
+    symptoms = models.TextField()
+    first_aid = models.TextField()
+
+class CommunityPost(models.Model):
+    post_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    fungi_id = models.ForeignKey(Fungi, on_delete=models.CASCADE)
+    image_url = models.ImageField(upload_to='community_images/')
+    location = models.CharField(max_length=255)
+    time = models.DateTimeField(auto_now_add=True)
+    notes = models.TextField(blank=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    STATUS = (
+        (0, 'Pending'),
+        (1, 'Public'),
+        (2, 'Rejected')
+    )
+
+    status = models.IntegerField(choices=STATUS, default=0)
