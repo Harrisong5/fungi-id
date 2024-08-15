@@ -40,15 +40,7 @@ class Fungi(models.Model):
     def __str__(self):
         return f"{self.name} ({self.species})"
 
-class Identified(models.Model):
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    fungi_id = models.ForeignKey(Fungi, on_delete=models.SET_NULL, null=True, blank=True)
-    image_url = models.ImageField(upload_to='identified_images/')
-    location = models.CharField(max_length=255)
-    time = models.DateTimeField(auto_now_add=True)
-    notes = models.TextField(blank=True)
-    updated_on = models.DateTimeField(auto_now=True)
 
 class Safety(models.Model):
 
@@ -81,7 +73,15 @@ class CommunityPost(models.Model):
     STATUS = (
         (0, 'Pending'),
         (1, 'Public'),
-        (2, 'Rejected')
+        (2, 'Private'),
+        (3, 'Rejected'),
+
     )
 
     status = models.IntegerField(choices=STATUS, default=0)
+
+class Identified(models.Model):
+
+    list_name = models.CharField(max_length=255, default='unnamed list')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post_id = models.ManyToManyField(CommunityPost)
