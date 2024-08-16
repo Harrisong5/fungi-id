@@ -40,6 +40,10 @@
                         <a class="nav-link {% if request.path == home_url %}active{% endif %}" aria-current="page"
                             href="#">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == home_url %}active{% endif %}" aria-current="page"
+                            href="#">link2</a>
+                    </li>
 
                 </ul>
                 <span class="navbar-text text-muted">
@@ -57,12 +61,59 @@
 
     </main>
 
-    {% block copyright %}
-        ingurland
-    {% endblock copyright %}
+    {% block posts %}
+    <div class="container-fluid">
+        <div class="row">
+    
+            <!-- Blog Entries Column -->
+            <div class="col-12 mt-3 left">
+                <div class="row">
+                    {% for post in post_list %}
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="image-container">
+                                    <div class="image-flash">
+                                        <p class="author">Author: {{ post.user_id }}</p>
+                                    </div>
+                                </div>
+                                <a href="#" class="post-link">
+                                    <h2 class="card-title"> Post ID: {{ post.post_id }}</h2>
+                                </a>
+    
+                                <hr />
+                                <p class="card-text text-muted h6">Species: {{ post.fungi_id}}
+                                </p>
+                                <p class="card-text text-muted h6">Notes: {{ post.notes}}
+                                </p>
+                                <p class="card-text text-muted h6">{{ post.time}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:3 %}
+                </div>
+                <div class="row">
+                    {% endif %}
+                    {% endfor %}
+    
+                </div>
+            </div>
+        </div>
+        {% if is_paginated %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+    {% endblock posts %}
 
     <!-- Footer -->
-    <footer class="footer mt-auto py-3 dark-bg">
+    <footer class="footer mt-auto py-3">
         <p class="m-0 text-center text-white">Follow us: <i class="fab fa-facebook-square ms-3"></i>
             <i class="fab fa-twitter-square ms-3"></i>
             <i class="fab fa-instagram-square ms-3"></i>
