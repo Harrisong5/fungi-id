@@ -15,7 +15,8 @@ class MapView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['GOOGLE_MAPS_API_KEY'] = settings.GOOGLE_MAPS_API_KEY  # Add your API key to the context
+        context['GOOGLE_MAPS_API_KEY'] = settings.GOOGLE_MAPS_API_KEY
+        context['posts'] = CommunityPost.objects.filter(status=1)
         return context
 
 class PostsList(generic.ListView):

@@ -66,6 +66,8 @@ class CommunityPost(models.Model):
     fungi_id = models.ForeignKey(Fungi, on_delete=models.CASCADE)
     image_url = models.ImageField(upload_to='community_images/')
     location = models.CharField(max_length=255)
+    latitude = models.DecimalField(max_digits=12, decimal_places=8, default=None, blank=True, null=True)
+    longitude = models.DecimalField(max_digits=12, decimal_places=8, default=None, blank=True, null=True)
     time = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(blank=True)
     updated_on = models.DateTimeField(auto_now=True)
