@@ -22,7 +22,7 @@
                 time: "{{ post.time }}",
                 user: "{{ post.user_id }}",
                 notes: "{{ post.notes }}",
-                image_url: "{% if post.image_url %}{{ post.image_url.url }}{% endif %}",
+                image_url: "{% if post.image_url %}{{ post.image_url.url }}{% endif %}"
             }{% if not forloop.last %},{% endif %}
             {% endfor %}
         ];
@@ -41,7 +41,7 @@
                         '<div>' + post.time + '<br>' +
                          '<p>' + post.user + '</p>' +
                          '<p>' + post.notes + '</p>' +
-                         '<img src="' + post.image_url + '" alt="Image" style="width:100px;height:auto;"></div>'
+                         '<img src="https://cdn-icons-png.flaticon.com/512/263/263888.png" alt="Image" style="width:100px;height:auto;"></div>'
             });
             
             marker.addListener('click', function() {
