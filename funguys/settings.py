@@ -14,8 +14,16 @@ from pathlib import Path
 
 import os
 import dj_database_url
+
 if os.path.isfile('env.py'):
     import env
+
+# Google maps 
+
+
+GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +37,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = 'django-insecure-h%vp&*3fyc3j4&q$&q8(62h3*7wqokij29r_wi!(k%po1329r0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['8000-harrisong5-fungiid-2ch1vey5j2l.ws.codeinstitute-ide.net','.herokuapp.com']
 
@@ -160,3 +168,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
