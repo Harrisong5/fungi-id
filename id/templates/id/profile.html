@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+ <p>this is the user profile page</p>
+ <h1>{{ user_details.username }}</h1>
+<p>Email: {{ user_details.email }}</p>
+<p>Username: {{ user_details.username }}</p>
+
+<h2>My Posts</h2>
+<ul>
+    {% for post in posts %}
+        <li>
+            <h3>{{ post.fungi_id}}</h3>
+            <p>{{ post.notes }}</p>
+            <p>{{ post.time}}</p>
+            <p>{{ post.location}}</p>
+            <img src="{{ post.image_url }}">
+        </li>
+    {% empty %}
+        <li>No posts available.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
+{% block posts %}
+
+{% endblock %}

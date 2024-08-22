@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import User, Profile, Fungi, Safety, CommunityPost
 from django.conf import settings
 
@@ -24,3 +25,25 @@ class PostsList(generic.ListView):
     template_name = "id/posts.html"
     context_object_name = 'post_list'
 
+class ProfilePage(LoginRequiredMixin, ListView):
+    model = CommunityPost
+    template_name = "id/profile.html"
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        # Get the current user
+        current_user = self.request.user
+        # Return only the posts of the current user
+        return CommunityPost.objects.filter(user_id=current_user).order_by('-time')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = self.request.user
+        # Add user details to the context
+        context['user_details'] = {
+            'username': current_user.username,
+            'email': current_user.email,
+            'password': current_user.password
+            # Add more fields as needed
+        }
+        return context
