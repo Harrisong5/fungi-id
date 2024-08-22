@@ -6,6 +6,8 @@
  <h1>{{ user_details.username }}</h1>
 <p>Email: {{ user_details.email }}</p>
 <p>Username: {{ user_details.username }}</p>
+<a href="{% url 'account_change_password' %}">change password</a>
+<a href="{% url 'account_email' %}">Change/Add Email</a>
 
 <h2>My Posts</h2>
 <ul>
