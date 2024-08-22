@@ -1,0 +1,43 @@
+function initMap() {
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 51.4545, lng: -2.5879},
+        zoom: 12
+    });
+    // Array of post data passed from the view
+    var posts = [
+        {% for post in posts %}
+        {
+            title: "{{ post.fungi_id }}",
+            lat: {{ post.latitude }},
+            lng: {{ post.longitude }},
+            time: "{{ post.time }}",
+            user: "{{ post.user_id }}",
+            notes: "{{ post.notes }}",
+            image_url: "{% if post.image_url %}{{ post.image_url.url }}{% endif %}"
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    // Loop through the posts and place markers on the map
+    posts.forEach(function(post) {
+        var marker = new google.maps.Marker({
+            position: {lat: parseFloat(post.lat), lng: parseFloat(post.lng)},
+            map: map,
+            title: post.title
+        });
+
+        // Info window for each marker
+        var infowindow = new google.maps.InfoWindow({
+            content: '<div><strong>' + post.title + '</strong><br>' +
+                    '<div>' + post.time + '<br>' +
+                     '<p>' + post.user + '</p>' +
+                     '<p>' + post.notes + '</p>' +
+                     '<img src="https://cdn-icons-png.flaticon.com/512/263/263888.png" alt="Image" style="width:100px;height:auto;"></div>'
+        });
+        
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+    });
+}
