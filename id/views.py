@@ -43,7 +43,17 @@ class ProfilePage(LoginRequiredMixin, ListView):
         context['user_details'] = {
             'username': current_user.username,
             'email': current_user.email,
-            'password': current_user.password
+            'password': current_user.password,
+            'date_joined': current_user.date_joined
             # Add more fields as needed
         }
+        profile = Profile.objects.get(user=current_user)
+
+        context['profile_details'] = {
+            'image_url': profile.image_url.url if profile.image_url else None,
+            'bio': profile.bio,
+            'created_on': profile.created_on,
+            'last_updated': profile.last_updated,
+        }
+        
         return context

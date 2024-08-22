@@ -8,6 +8,9 @@
 <p>Username: {{ user_details.username }}</p>
 <a href="{% url 'account_change_password' %}">change password</a>
 <a href="{% url 'account_email' %}">Change/Add Email</a>
+<p>Bio: {{ profile_details.bio }}</p>
+<p>Account created on: {{ user_details.date_joined }}</p>
+<p>Last Updated: {{ profile_details.last_updated }}</p>
 
 <h2>My Posts</h2>
 <ul>

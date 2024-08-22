@@ -10,8 +10,6 @@ class Profile(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.username
 
 class Fungi(models.Model):
 
