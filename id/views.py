@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views import generic
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import User, Profile, Fungi, Safety, CommunityPost
+from .models import User, Profile, Fungi, Safety, CommunityPost, Identified
 from django.conf import settings
 
 class PostList(generic.ListView):
@@ -66,5 +66,8 @@ class ProfilePage(LoginRequiredMixin, ListView):
             'created_on': profile.created_on,
             'last_updated': profile.last_updated,
         }
+        
+        identified_lists = Identified.objects.filter(user=current_user)
+        context['identified_lists'] = identified_lists
         
         return context

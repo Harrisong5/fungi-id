@@ -12,6 +12,27 @@
 <p>Account created on: {{ user_details.date_joined }}</p>
 <p>Last Updated: {{ profile_details.last_updated }}</p>
 
+<h3>Your Identified Lists</h3>
+{% if identified_lists %}
+    <ul>
+        {% for identified in identified_lists %}
+            <li>{{ identified.list_name }}</li>
+            <ul>
+                {% for post in identified.post_id.all %}
+                <li>
+                    <h3>{{ post.fungi_id}}</h3>
+                    <p>{{ post.notes }}</p>
+                    <p>{{ post.time}}</p>
+                    <p>{{ post.location}}</p>
+                    <img src="{{ post.image_url }}">
+                </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No identified lists found.</p>
+{% endif %}
 <h2>My Posts</h2>
 <ul>
     {% for post in posts %}
