@@ -47,7 +47,18 @@ class ProfilePage(LoginRequiredMixin, ListView):
             'date_joined': current_user.date_joined
             # Add more fields as needed
         }
-        profile = Profile.objects.get(user=current_user)
+         # Check if the profile exists, and create one if it doesn't
+        profile, created = Profile.objects.get_or_create(user=current_user)
+
+        # Add profile details to the context
+        context['profile_details'] = {
+            'image_url': profile.image_url.url if profile.image_url else None,
+            'bio': profile.bio,
+            'created_on': profile.created_on,
+            'last_updated': profile.last_updated,
+        }
+
+
 
         context['profile_details'] = {
             'image_url': profile.image_url.url if profile.image_url else None,
