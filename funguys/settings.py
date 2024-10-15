@@ -29,6 +29,9 @@ GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
+# Media files settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'profile_images')  
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
