@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.views import generic
+from django.views import generic, View
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import User, Profile, Fungi, Safety, CommunityPost, Identified
+from .forms import CommunityPostForm, IdentifiedForm
 from django.conf import settings
+from django.utils.decorators import method_decorator
 
 class PostList(generic.ListView):
     queryset = CommunityPost.objects.filter(status=2)
@@ -71,3 +73,35 @@ class ProfilePage(LoginRequiredMixin, ListView):
         context['identified_lists'] = identified_lists
         
         return context
+
+
+class CommunityPostCreateView(LoginRequiredMixin, ListView):
+    def get(self, request):
+        form = CommunityPostForm()
+        return render(request, 'id/create_community_post.html', {'form': form})
+
+    def post(self, request):
+        form = CommunityPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            community_post = form.save(commit=False)
+            community_post.user_id = request.user  # Link the post to the current user
+            community_post.save()
+            return redirect('community_post_success')  # Redirect after successful post creation
+
+        return render(request, 'id/create_community_post.html', {'form': form})
+
+class IdentifiedCreateView(View):
+    def get(self, request):
+        form = IdentifiedForm(user=request.user)  # Pass the logged-in user
+        return render(request, 'id/identified.html', {'form': form})
+
+    def post(self, request):
+        form = IdentifiedForm(request.POST, user=request.user)  # Pass the logged-in user
+        if form.is_valid():
+            identified = form.save(commit=False)
+            identified.user = request.user  # Associate the logged-in user
+            identified.save()
+            # Save the many-to-many relationship for post_id
+            form.save_m2m()
+            return redirect('profile')  # Redirect to a success page
+        return render(request, 'id/identified.html', {'form': form})
