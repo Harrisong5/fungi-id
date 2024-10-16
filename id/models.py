@@ -62,7 +62,7 @@ class CommunityPost(models.Model):
     post_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     fungi_id = models.ForeignKey(Fungi, on_delete=models.CASCADE)
-    image_url = models.ImageField(upload_to='community_images/')
+    image_url = models.ImageField(upload_to='media/community_images/')
     location = models.CharField(max_length=255)
     latitude = models.DecimalField(max_digits=12, decimal_places=8, default=None, blank=True, null=True)
     longitude = models.DecimalField(max_digits=12, decimal_places=8, default=None, blank=True, null=True)

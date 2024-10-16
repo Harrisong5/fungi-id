@@ -42,7 +42,7 @@
                         '<div>' + post.time + '<br>' +
                          '<p>' + post.user + '</p>' +
                          '<p>' + post.notes + '</p>' +
-                         '<img src="https://cdn-icons-png.flaticon.com/512/263/263888.png" alt="Image" style="width:100px;height:auto;"></div>'
+                         (post.image_url ? '<img src="' + post.image_url + '" alt="Post Image" style="width:100px;height:auto;"><br>' : '')
             });
             
             marker.addListener('click', function() {
