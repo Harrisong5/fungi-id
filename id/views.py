@@ -23,7 +23,7 @@ class MapView(TemplateView):
         return context
 
 class PostsList(generic.ListView):
-    queryset = CommunityPost.objects.filter(status=2)
+    queryset = CommunityPost.objects.filter(status=1)
     template_name = "id/posts.html"
     context_object_name = 'post_list'
 
